@@ -473,11 +473,11 @@
         </div>
         <div class="contact-item">
           <div class="icon">📞</div>
-          <span class="consultant-val">(813) 466-2228</span>
+          <span class="consultant-val c-phone"></span>
         </div>
         <div class="contact-item">
           <div class="icon">✉️</div>
-          <span class="consultant-val">jeff@thecodingpit.com</span>
+          <span class="consultant-val c-email"></span>
         </div>
       </div>
     </div>
@@ -669,8 +669,8 @@
     <p>Every business is different — and the best AI setup is the one built around how <em>you</em> actually work. Let's talk.</p>
     <div class="cta-contacts">
       <div class="cta-badge"><div class="dot"></div> Jeff Rosenthal</div>
-      <div class="cta-badge"><div class="dot"></div> (813) 466-2228</div>
-      <div class="cta-badge"><div class="dot"></div> jeff@thecodingpit.com</div>
+      <div class="cta-badge"><div class="dot"></div> <span class="c-phone"></span></div>
+      <div class="cta-badge"><div class="dot"></div> <span class="c-email"></span></div>
     </div>
     <div class="qr-row">
       <div class="qr-wrap">
@@ -688,8 +688,21 @@
 
 <footer>
   <img src="https://api.qrserver.com/v1/create-qr-code/?size=64x64&margin=0&color=64748b&data=https%3A%2F%2Fjeffrosenthal.github.io%2Fai-guide%2F" alt="QR" style="vertical-align:middle;margin-right:10px;border-radius:4px;opacity:0.7;" />
-  <strong>Jeff Rosenthal</strong> &nbsp;·&nbsp; (813) 466-2228 &nbsp;·&nbsp; jeff@thecodingpit.com &nbsp;·&nbsp; © 2026
+  <strong>Jeff Rosenthal</strong> &nbsp;·&nbsp; <span class="c-phone"></span> &nbsp;·&nbsp; <span class="c-email"></span> &nbsp;·&nbsp; © 2026
 </footer>
 
+<script>
+  // Contact info assembled at runtime — not present in source
+  (function() {
+    var _s = 3;
+    // Each char code shifted +3 at build time; subtract at runtime
+    var _e = [109,104,105,105,67,119,107,104,102,114,103,108,113,106,115,108,119,49,102,114,112];
+    var _p = [43,59,52,54,44,35,55,57,57,48,53,53,53,59];
+    var email = _e.map(function(c){return String.fromCharCode(c-_s);}).join('');
+    var phone = _p.map(function(c){return String.fromCharCode(c-_s);}).join('');
+    document.querySelectorAll('.c-email').forEach(function(el){el.textContent = email;});
+    document.querySelectorAll('.c-phone').forEach(function(el){el.textContent = phone;});
+  })();
+</script>
 </body>
 </html>
