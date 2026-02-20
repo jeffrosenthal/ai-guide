@@ -57,6 +57,38 @@
       margin: 0 auto;
       position: relative;
       z-index: 1;
+      display: flex;
+      align-items: flex-start;
+      gap: 48px;
+    }
+    .hero-text { flex: 1; }
+    .hero-qr {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding-top: 8px;
+    }
+    .hero-qr img {
+      width: 130px; height: 130px;
+      background: white;
+      padding: 8px;
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      display: block;
+    }
+    .hero-qr-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+    }
+    @media (max-width: 600px) {
+      .hero-inner { flex-direction: column; }
+      .hero-qr { flex-direction: row; align-self: flex-start; }
     }
     .hero-tag {
       display: inline-block;
@@ -430,22 +462,28 @@
 <!-- ═══════════ HERO ═══════════ -->
 <div class="hero">
   <div class="hero-inner">
-    <div class="hero-tag">Plain English Guide — 2026 Edition</div>
-    <h1>Your <span>AI Assistant</span><br>Without the Tech Overwhelm</h1>
-    <p class="hero-sub">Everything you need to know to start using AI in your business — explained simply, clearly, and honestly.</p>
-    <div class="contact-strip">
-      <div class="contact-item">
-        <div class="icon">👤</div>
-        <span><span class="consultant-name">Your Consultant</span> <span class="consultant-val">Jeff Rosenthal</span></span>
+    <div class="hero-text">
+      <div class="hero-tag">Plain English Guide — 2026 Edition</div>
+      <h1>Your <span>AI Assistant</span><br>Without the Tech Overwhelm</h1>
+      <p class="hero-sub">Everything you need to know to start using AI in your business — explained simply, clearly, and honestly.</p>
+      <div class="contact-strip">
+        <div class="contact-item">
+          <div class="icon">👤</div>
+          <span><span class="consultant-name">Your Consultant</span> <span class="consultant-val">Jeff Rosenthal</span></span>
+        </div>
+        <div class="contact-item">
+          <div class="icon">📞</div>
+          <span class="consultant-val">(813) 466-2228</span>
+        </div>
+        <div class="contact-item">
+          <div class="icon">✉️</div>
+          <span class="consultant-val">jeff@thecodingpit.com</span>
+        </div>
       </div>
-      <div class="contact-item">
-        <div class="icon">📞</div>
-        <span class="consultant-val">(813) 466-2228</span>
-      </div>
-      <div class="contact-item">
-        <div class="icon">✉️</div>
-        <span class="consultant-val">jeff@thecodingpit.com</span>
-      </div>
+    </div>
+    <div class="hero-qr">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=0&color=0f1f3d&data=https%3A%2F%2Fjeffrosenthal.github.io%2Fai-guide%2F" alt="View brochure online" />
+      <span class="hero-qr-label">📄 Scan to read online</span>
     </div>
   </div>
 </div>
