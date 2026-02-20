@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your AI Assistant — A Plain English Guide</title>
+<style>
+  :root {
+    --accent: #0ea5e9;
+    --accent-dark: #0284c7;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+  /* Hero */
+  .hero { background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0369a1 100%); color: white; padding: 80px 24px 100px; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+  .hero-badge { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 16px; border-radius: 999px; margin-bottom: 24px; position: relative; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 20px; position: relative; }
+  .hero p { font-size: 1.2rem; color: rgba(255,255,255,0.75); max-width: 560px; margin: 0 auto; position: relative; }
+
+  /* Content */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+  /* Intro card */
+  .intro-card { background: white; border-radius: 16px; padding: 36px 40px; margin: -48px auto 48px; max-width: 760px; box-shadow: 0 20px 60px rgba(0,0,0,0.12); position: relative; border-top: 4px solid var(--accent); }
+  .intro-card p { font-size: 1.1rem; color: var(--muted); }
+  .intro-card strong { color: var(--text); }
+
+  /* Sections */
+  .section { margin-bottom: 64px; }
+  .section-label { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  h2 { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px; color: var(--text); }
+  h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+  p { color: var(--muted); margin-bottom: 16px; font-size: 1rem; }
+  p:last-child { margin-bottom: 0; }
+
+  /* Cards grid */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 24px; }
+  .card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: box-shadow 0.2s, transform 0.2s; }
+  .card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); transform: translateY(-2px); }
+  .card-icon { font-size: 2rem; margin-bottom: 12px; }
+  .card h3 { margin-bottom: 6px; font-size: 1.05rem; }
+  .card p { font-size: 0.9rem; }
+
+  /* Compare */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
+  @media(max-width: 600px) { .compare { grid-template-columns: 1fr; } }
+  .compare-card { border-radius: 12px; padding: 28px; }
+  .compare-card.cloud { background: #f0f9ff; border: 1px solid #bae6fd; }
+  .compare-card.local { background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .compare-card h3 { font-size: 1.1rem; margin-bottom: 16px; }
+  .compare-card ul { list-style: none; }
+  .compare-card ul li { padding: 4px 0; font-size: 0.9rem; color: var(--muted); }
+  .compare-card ul li::before { content: ''; margin-right: 8px; }
+  .pro::before { content: '✅' !important; }
+  .con::before { content: '⚠️' !important; }
+
+  /* Providers */
+  .providers { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 24px; }
+  .provider { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .provider-name { font-weight: 800; font-size: 1rem; margin-bottom: 4px; }
+  .provider-model { font-size: 0.8rem; font-weight: 600; color: var(--accent); margin-bottom: 8px; }
+  .provider p { font-size: 0.85rem; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9rem; }
+  th { text-align: left; padding: 12px 16px; background: #f1f5f9; color: var(--text); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  th:first-child { border-radius: 8px 0 0 8px; }
+  th:last-child { border-radius: 0 8px 8px 0; }
+  td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--muted); }
+  tr:last-child td { border-bottom: none; }
+
+  /* CTA */
+  .cta { background: linear-gradient(135deg, #0f172a, #1e3a5f); color: white; border-radius: 20px; padding: 56px 48px; text-align: center; margin-bottom: 64px; }
+  .cta h2 { color: white; font-size: 2rem; margin-bottom: 16px; }
+  .cta p { color: rgba(255,255,255,0.7); font-size: 1.1rem; margin-bottom: 0; }
+  .cta .highlight { color: #38bdf8; font-weight: 700; }
+
+  /* Steps */
+  .steps { counter-reset: step; }
+  .step { display: flex; gap: 20px; margin-bottom: 28px; }
+  .step-num { counter-increment: step; width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: white; font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .step-num::before { content: counter(step); }
+  .step-content h3 { margin-bottom: 4px; }
+
+  /* Divider */
+  hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+  /* Footer */
+  footer { text-align: center; padding: 32px 24px; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">Beginner's Guide</div>
+  <h1>Your AI Assistant —<br>A Plain English Guide</h1>
+  <p>Everything you need to know to get started, without the tech overwhelm.</p>
+</div>
+
+<div class="container">
+  <div class="intro-card">
+    <p>AI is no longer just for big tech companies. <strong>Businesses of every size</strong> are using it today to save time, reduce costs, and deliver better service. This guide explains what it is, how it works, and what it might cost — in plain language.</p>
+  </div>
+
+  <!-- What is AI -->
+  <div class="section">
+    <div class="section-label">Section 01</div>
+    <h2>What Is AI, Really?</h2>
+    <p>Artificial Intelligence (AI) is software that can understand language, answer questions, write content, analyze information, and help you think through problems — the same way a brilliant colleague might, except it's available <strong>24 hours a day</strong>, never gets tired, and can process information faster than any human.</p>
+    <p>Think of it less like a robot and more like a very capable co-worker who happens to know a little about everything.</p>
+    <div class="cards">
+      <div class="card"><div class="card-icon">💬</div><h3>Understands Language</h3><p>Ask it anything in plain English. No special commands or technical knowledge required.</p></div>
+      <div class="card"><div class="card-icon">⚡</div><h3>Works Instantly</h3><p>Tasks that take a human hours can often be done in seconds. No waiting, no scheduling.</p></div>
+      <div class="card"><div class="card-icon">🔄</div><h3>Always Available</h3><p>24/7, no sick days, no vacations. It's there whenever you need it.</p></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- AI vs Agent -->
+  <div class="section">
+    <div class="section-label">Section 02</div>
+    <h2>AI vs. AI Agent — What's the Difference?</h2>
+    <p>An AI on its own can answer a question. An <strong>AI Agent</strong> can actually <em>do things</em>.</p>
+    <div class="cards">
+      <div class="card"><div class="card-icon">🧠</div><h3>Basic AI</h3><p>You ask "write me an email." It writes the email. That's it — you still have to send it.</p></div>
+      <div class="card" style="border-color: var(--accent); background: #f0f9ff;"><div class="card-icon">🤖</div><h3>AI Agent</h3><p>You say "write me an email and send it." It writes <em>and</em> sends it — and can follow up if no one replies.</p></div>
+    </div>
+    <p style="margin-top: 24px;">An agent is AI with hands. It can browse the web, read files, connect to your software, schedule tasks, and run reports — automatically.</p>
+    <div class="steps" style="margin-top: 32px;">
+      <div class="step"><div class="step-num"></div><div class="step-content"><h3>You describe what you want</h3><p>In plain English — no technical knowledge required.</p></div></div>
+      <div class="step"><div class="step-num"></div><div class="step-content"><h3>The agent figures out how to do it</h3><p>It breaks the task into steps, uses the right tools, accesses the right data.</p></div></div>
+      <div class="step"><div class="step-num"></div><div class="step-content"><h3>It does the work</h3><p>Not just a suggestion — actual actions taken on your behalf.</p></div></div>
+      <div class="step"><div class="step-num"></div><div class="step-content"><h3>You review the result</h3><p>You stay in control, with full visibility into what was done.</p></div></div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Providers -->
+  <div class="section">
+    <div class="section-label">Section 03</div>
+    <h2>The Major AI Providers</h2>
+    <p>Several companies build the AI "brains" that power assistants. Each has different strengths and costs.</p>
+    <div class="providers">
+      <div class="provider"><div class="provider-name">Anthropic</div><div class="provider-model">Claude</div><p>Thoughtful, nuanced responses. Excellent for writing, analysis, and following complex instructions.</p></div>
+      <div class="provider"><div class="provider-name">OpenAI</div><div class="provider-model">ChatGPT / GPT-4</div><p>The most widely used AI. Versatile — great for general use, coding, and creative work.</p></div>
+      <div class="provider"><div class="provider-name">Google</div><div class="provider-model">Gemini</div><p>Deep Google integration. Excellent at research and processing large documents.</p></div>
+      <div class="provider"><div class="provider-name">Meta</div><div class="provider-model">Llama (Open Source)</div><p>Free and open. Great for privacy-sensitive businesses that want to run AI locally.</p></div>
+    </div>
+    <p style="margin-top: 20px; font-size: 0.9rem;">Each model has different strengths. A good AI setup uses the <strong>right model for the right job</strong> — the same way a business doesn't use a senior partner to answer every phone call.</p>
+  </div>
+
+  <hr>
+
+  <!-- Costs -->
+  <div class="section">
+    <div class="section-label">Section 04</div>
+    <h2>Understanding AI Costs</h2>
+    <p>AI pricing can seem confusing. Here's the simple version.</p>
+
+    <div class="compare" style="margin-bottom: 28px;">
+      <div class="compare-card cloud">
+        <h3>📱 Subscription</h3>
+        <p style="font-size: 0.9rem; margin-bottom: 12px;">Flat monthly fee. You use AI through a chat interface. Like Netflix for AI.</p>
+        <p style="font-size: 0.85rem; font-weight: 700; color: #0369a1;">$20–$200/month</p>
+      </div>
+      <div class="compare-card local">
+        <h3>⚙️ API / Usage-Based</h3>
+        <p style="font-size: 0.9rem; margin-bottom: 12px;">Pay per use. Measured in "tokens" — roughly ¾ of a word. You only pay for what you use.</p>
+        <p style="font-size: 0.85rem; font-weight: 700; color: #16a34a;">Pennies per task</p>
+      </div>
+    </div>
+
+    <table>
+      <thead><tr><th>Use Case</th><th>Est. Monthly Cost</th></tr></thead>
+      <tbody>
+        <tr><td>Personal use (chat only)</td><td>$20–$30/month</td></tr>
+        <tr><td>Small business, light automation</td><td>$50–$200/month</td></tr>
+        <tr><td>Medium business with integrations</td><td>$200–$1,000/month</td></tr>
+        <tr><td>Heavy automation, high volume</td><td>$1,000+/month</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top: 16px; font-size: 0.9rem;">Most small businesses spend far less than they expect. A task that takes a human 2 hours might cost <strong>$0.10–$1.00</strong> in AI processing.</p>
+  </div>
+
+  <hr>
+
+  <!-- Cloud vs Local -->
+  <div class="section">
+    <div class="section-label">Section 05</div>
+    <h2>Cloud vs. Local — Which Is Right for You?</h2>
+
+    <div class="compare">
+      <div class="compare-card cloud">
+        <h3>☁️ Cloud AI</h3>
+        <p style="font-size: 0.85rem; margin-bottom: 12px;">Your data is processed on the provider's servers. The most common approach.</p>
+        <ul>
+          <li class="pro">No hardware to buy or maintain</li>
+          <li class="pro">Always up to date automatically</li>
+          <li class="pro">Access from anywhere</li>
+          <li class="pro">Most powerful models</li>
+          <li class="con">Data leaves your building</li>
+          <li class="con">Ongoing monthly costs</li>
+          <li class="con">Requires internet</li>
+        </ul>
+      </div>
+      <div class="compare-card local">
+        <h3>🖥️ Local AI</h3>
+        <p style="font-size: 0.85rem; margin-bottom: 12px;">AI runs on your own hardware. Data never leaves your network.</p>
+        <ul>
+          <li class="pro">100% private — data stays local</li>
+          <li class="pro">No recurring AI costs</li>
+          <li class="pro">Works without internet</li>
+          <li class="pro">No usage limits</li>
+          <li class="con">Requires capable hardware</li>
+          <li class="con">Less powerful than cloud</li>
+          <li class="con">Technical setup required</li>
+        </ul>
+      </div>
+    </div>
+
+    <table style="margin-top: 24px;">
+      <thead><tr><th>Hardware Setup</th><th>What You Can Run</th><th>Approx. Cost</th></tr></thead>
+      <tbody>
+        <tr><td>Modern laptop (16GB RAM)</td><td>Small models, basic tasks</td><td>Already owned</td></tr>
+        <tr><td>Desktop with Nvidia RTX 3080+</td><td>Mid-size models, good quality</td><td>$800–$1,500</td></tr>
+        <tr><td>Dedicated AI machine (24–48GB VRAM)</td><td>Large, high-quality models</td><td>$2,000–$5,000</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top: 16px; font-size: 0.9rem;"><strong>Many businesses use both:</strong> Cloud AI for general work, local AI for anything sensitive.</p>
+  </div>
+
+  <hr>
+
+  <!-- CTA -->
+  <div class="cta">
+    <h2>The Real Question</h2>
+    <p>The question isn't <em>whether</em> AI belongs in your business.</p>
+    <p class="highlight" style="margin-top: 12px; font-size: 1.2rem;">Which parts of your day should AI be handling first?</p>
+    <p style="margin-top: 16px;">AI is a genuine multiplier. Tasks that took hours take minutes. Reports write themselves. Follow-up happens automatically. The businesses adopting it thoughtfully are gaining a real competitive edge — starting now.</p>
+  </div>
+
+</div>
+
+<footer>
+  <p>A plain English introduction to AI for business. Questions? Let's talk.</p>
+</footer>
+
+</body>
+</html>
